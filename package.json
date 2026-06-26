@@ -1,0 +1,17 @@
+{
+  "name": "consumer-law-rag",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "ingest":       "node ingest.js",
+    "ingest:reset": "node ingest.js --reset"
+  },
+  "dependencies": {
+    "chromadb": "^3.4.3",
+    "dotenv":   "^16.4.5",
+    "openai":   "^6.45.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
