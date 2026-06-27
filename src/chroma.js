@@ -20,7 +20,7 @@ export async function getOrResetCollection(client, name, reset = false) {
   // metadata into the request — we always supply raw vectors ourselves via upsert().
   const opts = { name, embeddingFunction: null };
   if (reset) {
-    try { await client.deleteCollection(name); } catch { /* not found, ok */ }
+    try { await client.deleteCollection({ name }); } catch { /* not found, ok */ }
     return client.createCollection(opts);
   }
   return client.getOrCreateCollection(opts);
