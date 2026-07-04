@@ -13,7 +13,7 @@ const SOURCES = ['cdc', 'termo_compra', 'faq'];
  *
  * @typedef {{ text: string, distance: number, chunkIndex: number }} Chunk
  */
-export async function retrieveAll(queryText, { nResults = 3, adapter, client } = {}) {
+export async function retrieveAll(queryText, { nResults = 6, adapter, client } = {}) {
   const embed  = adapter ?? new OpenAIEmbeddingAdapter();
   const chroma = client  ?? createChromaClient();
 

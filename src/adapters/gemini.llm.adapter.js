@@ -6,7 +6,7 @@ export class GeminiLLMAdapter extends LLMAdapter {
   #model;
   #maxTokens;
 
-  constructor({ model = 'gemini-2.0-flash', maxTokens = 2048 } = {}) {
+  constructor({ model = 'gemini-2.0-flash-lite', maxTokens = 2048 } = {}) {
     super();
     this.#client = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
     this.#model = model;
