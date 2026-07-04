@@ -1,5 +1,6 @@
-import Anthropic from '@anthropic-ai/sdk';
 import { retrieveAll, assembleContext } from './retriever.js';
+import { AnthropicLLMAdapter } from './adapters/anthropic.llm.adapter.js';
+import { GeminiLLMAdapter } from './adapters/gemini.llm.adapter.js';
 
 const SYSTEM_PROMPT = `Você é um assistente de atendimento pré-venda de uma loja de e-commerce.
 Responda a dúvida do cliente com base EXCLUSIVAMENTE nos trechos de documentos fornecidos.
@@ -24,29 +25,22 @@ Se houver contradição:
 Se não houver contradição, responda normalmente baseando-se nas fontes disponíveis.
 Seja claro, objetivo e útil para o cliente.`;
 
-const client = new Anthropic();
+function createDefaultAdapter() {
+  const provider = (process.env.LLM_PROVIDER ?? 'anthropic').toLowerCase();
+  if (provider === 'gemini') return new GeminiLLMAdapter();
+  return new AnthropicLLMAdapter();
+}
 
 /**
- * Retrieves relevant context and generates an answer via Claude.
+ * Retrieves relevant context and generates an answer via the configured LLM.
  * @param {string} question
- * @returns {Promise<import('@anthropic-ai/sdk').Message>}
+ * @param {{ adapter?: import('./adapters/llm.adapter.js').LLMAdapter }} opts
+ * @returns {Promise<string>}
  */
-export async function answer(question) {
+export async function answer(question, { adapter } = {}) {
+  const llm = adapter ?? createDefaultAdapter();
   const results = await retrieveAll(question);
   const context = assembleContext(results);
-
-  const stream = client.messages.stream({
-    model: 'claude-opus-4-8',
-    max_tokens: 2048,
-    thinking: { type: 'adaptive' },
-    system: SYSTEM_PROMPT,
-    messages: [
-      {
-        role: 'user',
-        content: `DOCUMENTOS DE REFERÊNCIA:\n\n${context}\n\n---\n\nPERGUNTA DO CLIENTE: ${question}`,
-      },
-    ],
-  });
-
-  return stream.finalMessage();
+  const userMessage = `DOCUMENTOS DE REFERÊNCIA:\n\n${context}\n\n---\n\nPERGUNTA DO CLIENTE: ${question}`;
+  return llm.chat(SYSTEM_PROMPT, userMessage);
 }

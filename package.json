@@ -6,10 +6,11 @@
     "ingest": "node ingest.js",
     "ingest:reset": "node ingest.js --reset",
     "query": "node query.js",
-    "chat":  "node chat.js"
+    "chat": "node chat.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0",
+    "@google/genai": "^2.10.0",
     "chromadb": "^3.4.3",
     "dotenv": "^16.4.5",
     "openai": "^6.45.0"

@@ -8,12 +8,8 @@ function ask(prompt) {
   return new Promise((resolve) => rl.question(prompt, resolve));
 }
 
-function printAnswer(message) {
-  for (const block of message.content) {
-    if (block.type === 'text') {
-      console.log('\n' + block.text);
-    }
-  }
+function printAnswer(text) {
+  console.log('\n' + text);
 }
 
 // ── Single-shot mode: node chat.js "<pergunta>" ──────────────────────────────
