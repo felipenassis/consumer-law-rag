@@ -76,7 +76,7 @@ A garantia cobre defeitos de fabricação, mas não danos por quedas, líquidos 
 │                      FASE 1 — INGESTÃO                  │
 │                                                         │
 │  data/cdc.txt ──┐                                       │
-│  data/termo.txt ├─► Chunker ──► OpenAI Embeddings ──►  │
+│  data/termo.txt ├─► Chunker ──► OpenAI Embeddings ──►   │
 │  data/faq.txt ──┘              (text-embedding-3-small) │
 │                                         │               │
 │                             ┌───────────▼────────────┐  │
@@ -105,12 +105,12 @@ A garantia cobre defeitos de fabricação, mas não danos por quedas, líquidos 
 │         + pergunta do usuário                           │
 │                    │                                    │
 │            LLMAdapter (plugável)                        │
-│         ┌──────────┴──────────┐                        │
+│         ┌──────────┴──────────┐                         │
 │  AnthropicAdapter        GeminiAdapter                  │
-│  (Claude Opus 4.8)   (Gemini 2.0 Flash Lite)           │
+│  (Claude Opus 4.8)   (Gemini 2.0 Flash Lite)            │
 │                    │                                    │
 │              Resposta final                             │
-│    (com ⚠️ DIVERGÊNCIA se aplicável)                    │
+│        (com DIVERGÊNCIA se aplicável)                   │
 └─────────────────────────────────────────────────────────┘
 ```
 
